@@ -1,0 +1,20 @@
+# Project Prismatic Monism — Python Dependencies
+# Single requirements file for the entire repository.
+# Install: pip install -r requirements.txt
+#
+# GPU setup (Phase 9): replace jax[cpu] with jax[cuda12] below
+# and set XLA_PYTHON_CLIENT_MEM_FRACTION=0.6 before importing jax.
+
+# ── Core Physics Engine ──────────────────────────────────────────────────
+jax[cpu]          # Phase 9: switch to jax[cuda12] for GPU
+numpy
+h5py
+
+# ── API Server ───────────────────────────────────────────────────────────
+fastapi
+uvicorn[standard]
+
+# ── Pause & Analyze ──────────────────────────────────────────────────────
+scipy
+networkx
+python-louvain    # community detection (Louvain modularity)

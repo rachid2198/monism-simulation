@@ -438,8 +438,8 @@ monist-simulation/
 ├── theory_specifications.md       # Pure mathematical model (reference)
 ├── development_specifications.md  # This file (implementation plan)
 ├── TODO.md                        # Step-by-step implementation order
+├── requirements.txt               # Single Python dependency manifest (all packages)
 ├── backend/
-│   ├── requirements.txt           # jax, fastapi, uvicorn, h5py, numpy, scipy, networkx, etc.
 │   ├── main.py                    # FastAPI app entry point, REST routes, WebSocket
 │   ├── engine.py                  # JAX physics engine (all JIT functions)
 │   ├── lifecycle.py               # Simulation state machine, run loop
@@ -474,6 +474,8 @@ monist-simulation/
 ---
 
 ## 12. Dependencies
+
+All Python dependencies are declared in a single root `requirements.txt`. Install with `pip install -r requirements.txt`. Frontend dependencies live in `frontend/package.json` and are installed via `pnpm install`.
 
 ### Backend (Python)
 
