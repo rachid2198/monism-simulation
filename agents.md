@@ -214,4 +214,45 @@ When activated, your first actions should be:
 4. Begin Phase 1, Task 1.1: activate the existing `env/` virtual environment and install dependencies.
 5. Proceed through TODO phases in order, checking off items as completed.
 
-Do not design. Do not optimize. Do not redesign. **Build what is specified.**
+## 9. TODO Status Tracking Protocol
+
+The `TODO.md` file is the project's live status board. Every task in every phase carries a status tag that agents maintain in real time.
+
+### 9.1 Status Lifecycle
+
+```
+[Pending] ──▶ [Review] ──▶ [Done]
+  (not       (agent       (human
+  started)    finished,    confirmed)
+              awaiting
+              verification)
+```
+
+- **`[Pending]`**: No agent has completed this task yet. This is the initial state for all tasks.
+- **`[Review]`**: The agent has completed the task (code written, tests passing). The task now awaits human verification. The agent must NOT proceed to the next phase until all tasks in the current phase are either `[Review]` (awaiting verification) or `[Done]` (already confirmed). When a phase's tasks are all `[Done]`, the phase itself is complete.
+- **`[Done]`**: The human has reviewed the agent's work and confirmed it is correct. Only the human can mark a task `[Done]` — the agent must NEVER set this status itself. After human confirmation of a whole phase, the agent proceeds to the next phase.
+
+### 9.2 Agent Responsibilities
+
+1. **On first activation** (or when resuming after a session gap): Read `TODO.md` to discover the current project state. The status tags tell you exactly where work was left off.
+2. **When starting a new task**: Change its tag from `[Pending]` to `[Review]` when you finish writing code and running its tests.
+3. **When a phase is complete** (all tasks `[Review]`): Stop and present results to the human for verification. Do NOT proceed to the next phase until the human marks tasks `[Done]` and explicitly says to continue.
+4. **If the human says "confirmed" or "good to go" for a task/phase**: DO NOT change `[Review]` to `[Done]` yourself — the human will do it. Wait for them to actually update the status, or ask if they want you to do it on their behalf.
+
+### 9.3 Human Responsibilities
+
+1. Review agent-completed `[Review]` tasks (read code, run tests).
+2. Mark tasks as `[Done]` after confirming correctness.
+3. Tell the agent to proceed to the next phase when ready.
+
+### 9.4 Format
+
+```markdown
+## Phase N: Title
+
+- [Review] **N.1** Task description...
+- [Pending] **N.2** Task description...
+- [Done] **N.3** Task description...
+```
+
+No other status strings are valid. Do not use `[In Progress]`, `[Blocked]`, or any variant — the three-state lifecycle is the only one.

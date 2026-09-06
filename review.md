@@ -1,0 +1,8 @@
+### Review Date: 2026-09-05
+**[STATUS: RESOLVED]**
+*   **Task Audited:** Phase 1 Review tasks: 1.1 Activate env/install dependencies; 1.2 Implement `engine.py`; 1.3 Implement `initialize(N, seed)`; 1.4 N=4 manual integration test; 1.5 N=100 1000-tick test.
+*   **Target Files:** `TODO.md`, `development_specifications.md`, `theory_specifications.md`, `AGENTS.md`, `requirements.txt`, `env/pyvenv.cfg`, `backend/engine.py`, `backend/test_phase1.py`.
+*   **Critique 1 [ARCHITECTURAL]:** RESOLVED. Root `requirements.txt` populated with all Python deps. `development_specifications.md` Section 11 file tree and Section 12 preamble updated to reference the single root manifest. Note: future-phase deps (fastapi, uvicorn, etc.) are declared but not yet installed -- acceptable per Phase 1 scope.
+*   **Critique 2 [TESTING]:** RESOLVED. `test_phase1.py` test_b() now checks `jnp.isinf()` alongside `jnp.isnan()` for both S and W arrays. Variable renamed from `nan_step` to `nan_inf_step`. Failure message updated to "NaN or Inf detected".
+*   **Critique 3 [TESTING]:** RESOLVED (fully, second pass). Initial fix added warm-up `tick()` call. Second-pass reviewer noted JAX dispatch is asynchronous -- warm-up must block on completion to be rigorous. Added `block_until_ready()` on both S and W arrays from the warm-up tick before starting the timer. Final throughput: 1166.4 ticks/sec. The 1000 Hz threshold claim remains rejected -- it is a Phase 9 GPU deployment target, not a Phase 1 CPU pass/fail criterion.
+*   **Critique 4 [TESTING]:** RESOLVED. Column header changed from `min(W_ii)` to `max(|W_ii|)`. Diagnostic computation changed from `min(abs(diag(W)))` to `max(abs(diag(W)))` -- matches the enforced assertion.
